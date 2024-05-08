@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <style>
+        /* Basic styles for the player */
+        #music-player {
+            margin: 20px;
+        }
+        .song-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .song-list li {
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+        .song-list li.playing {
+            background-color: #48e67c;
+        }
+    </style>
+</head>
+<body>
+    <div id="music-player">
+        <h2>Music Player</h2>
+        <ul class="song-list">
+            <li onclick="playSong(0)">Sukh Karta Dukh Harta</li>
+            <li onclick="playSong(1)">Vraj Jan Man Sukhkari Radhe</li>
+            <li onclick="playSong(2)">RADHA RANI</li>
+            <li onclick="playSong(3)">Main Koi Aisa Geet Gaoon</li>
+            <li onclick="playSong(4)">Mein Chali</li>
+            <li onclick="playSong(5)">Ritviz - Liggi</li>
+            <!-- Add more songs as needed -->
+        </ul>
+        <audio id="audio-player" controls onended="playNextSong()">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <script>
+        var currentSongIndex = null;
+        var songElements = document.querySelectorAll('.song-list li');
+
+        function playSong(index) {
+            var audioPlayer = document.getElementById('audio-player');
+            audioPlayer.src = 'song' + (index + 1) + '.mp3'; // Adjust the song filename pattern as needed
+            audioPlayer.play();
+
+            // Remove the 'playing' class from the previously selected song
+            if (currentSongIndex !== null) {
+                songElements[currentSongIndex].classList.remove('playing');
+            }
+
+            // Add the 'playing' class to the currently selected song
+            songElements[index].classList.add('playing');
+            currentSongIndex = index;
+        }
+        function playNextSong() {
+            var nextIndex = (currentSongIndex + 1) % songElements.length;
+            playSong(nextIndex);
+        }
+    </script>
+</body>
+</html>
